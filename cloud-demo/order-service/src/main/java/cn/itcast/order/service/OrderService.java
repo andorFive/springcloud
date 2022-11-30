@@ -22,7 +22,8 @@ public class OrderService {
         //2、查询user
         //3、调用url地址
         //发起调用
-        String url = "http://127.0.0.1:8081/user/" + order.getUserId();
+//        String url = "http://127.0.0.1:8081/user/" + order.getUserId();
+        String url = "http://userservice/user/" + order.getUserId();
         //存入order
         User forObject = restTemplate.getForObject(url, User.class);
         order.setUser(forObject);
