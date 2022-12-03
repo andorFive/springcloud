@@ -11,6 +11,12 @@ spring:
   cloud:
     nacos:
       server-addr: localhost:8848
+      discovery:
+        cluster-name: HZ # 集群名称
+#        namespace: 4ff9d8fd-1533-4c08-ac57-fc7d81702a58
+userservice:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.alibaba.cloud.nacos.ribbon.NacosRule # 负载均衡规则
 #eureka:
 #  client:
 #    service-url:
