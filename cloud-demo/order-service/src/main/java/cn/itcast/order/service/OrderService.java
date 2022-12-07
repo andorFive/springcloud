@@ -1,5 +1,6 @@
 package cn.itcast.order.service;
 
+import cn.itcast.order.feign.UserClient;
 import cn.itcast.order.mapper.OrderMapper;
 import cn.itcast.order.pojo.Order;
 import cn.itcast.order.pojo.User;
@@ -13,8 +14,11 @@ public class OrderService {
     @Autowired
     private OrderMapper orderMapper;
 
+//    @Autowired
+//    private RestTemplate restTemplate;
+
     @Autowired
-    private RestTemplate restTemplate;
+    private UserClient userClient;
 
     public Order queryOrderById(Long orderId) {
         // 1.查询订单
@@ -23,10 +27,13 @@ public class OrderService {
         //3、调用url地址
         //发起调用
 //        String url = "http://127.0.0.1:8081/user/" + order.getUserId();
-        String url = "http://userservice/user/" + order.getUserId();
+//        String url = "http://userservice/user/" + order.getUserId();
+        //利用feign发起http请求，查询用户
+        User byId = userClient.findById(order.getUserId());
+
         //存入order
-        User forObject = restTemplate.getForObject(url, User.class);
-        order.setUser(forObject);
+//        User forObject = restTemplate.getForObject(url, User.class);
+        order.setUser(byId);
         // 4.返回
         return order;
     }
